@@ -1,0 +1,474 @@
+Screen2 As screen:
+    OnVisible: |-
+        =ClearCollect(Collectvideo,{Result:"All"});
+        Collect(Collectvideo,Distinct(SqlData,EmployeAddress))
+
+    Label11 As label:
+        Align: =Center
+        Fill: =RGBA(186, 202, 226, 1)
+        Height: =58
+        Size: =20
+        Text: ="EmployeID"
+        Width: =146
+        X: =131
+        Y: =153
+        ZIndex: =1
+
+    Label12 As label:
+        Align: =Center
+        Fill: =RGBA(186, 202, 226, 1)
+        Height: =58
+        Size: =20
+        Text: ="EmployeName"
+        Width: =202
+        X: =287
+        Y: =153
+        ZIndex: =2
+
+    Label13 As label:
+        Align: =Center
+        Fill: =RGBA(186, 202, 226, 1)
+        Height: =58
+        Size: =20
+        Text: ="EmployeAddress"
+        Width: =224
+        X: =499
+        Y: =153
+        ZIndex: =3
+
+    Label14 As label:
+        Align: =Center
+        Fill: =RGBA(186, 202, 226, 1)
+        Height: =58
+        Size: =20
+        Text: ="EmployeNo"
+        Width: =185
+        X: =729
+        Y: =153
+        ZIndex: =4
+
+    Label15 As label:
+        Align: =Center
+        Fill: =RGBA(186, 202, 226, 1)
+        Height: =58
+        Size: =20
+        Text: ="Skill"
+        Width: =174
+        X: =921
+        Y: =153
+        ZIndex: =5
+
+    Label16 As label:
+        Align: =Center
+        Fill: =RGBA(186, 202, 226, 1)
+        Height: =58
+        Size: =20
+        Text: ="Edit"
+        Width: =116
+        X: =1100
+        Y: =152
+        ZIndex: =6
+
+    Label17 As label:
+        Align: =Center
+        Fill: =RGBA(186, 202, 226, 1)
+        Height: =59
+        Size: =20
+        Text: ="Delete"
+        Width: =118
+        X: =1226
+        Y: =152
+        ZIndex: =7
+
+    Button2 As button:
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Height: =54
+        OnSelect: =Navigate(Screen1)
+        Size: =20
+        Text: ="Add"
+        Width: =168
+        X: =1126
+        Y: =67
+        ZIndex: =8
+
+    Gallery2 As gallery.galleryVertical:
+        Height: =502
+        Items: |-
+            =//Search(SqlData,TextInput5.Text,"EmployeName")
+            Search(
+            If(
+                Dropdown1.Selected.Result = "All",
+                SqlData,
+                Filter(
+                    SqlData,
+                    EmployeAddress = Dropdown1.Selected.Result
+                )
+            ),
+            TextInput5.Text,"EmployeAddress","EmployeName")
+            
+            //Filter(SqlData, EmployeAddress = Dropdown1.Selected.Result)
+            //Filter(Search(SqlData), If(Dropdown1.Selected.Result = "All", true, Emp = Dropdown1.Selected.Result
+            //Filter(Search(SqlData), If(Dropdown1.Selected.Result = "All", true, EmpName = Dropdown1.Selected.Result))
+            //With({Records:SqlData},ForAll(Sequence(CountRows(Records)),Patch(Last(FirstN(Records,Value)),{Numberseq:Value})))
+        Layout: =Layout.Vertical
+        TemplateFill: =If(Mod(ThisItem.SrNo,2)=0,RGBA(255,255 , 255, 1),RGBA(0, 187, 212, 1))
+        TemplateSize: =116
+        Width: =1288
+        X: =40
+        Y: =223
+        ZIndex: =9
+
+        Label18 As label:
+            Align: =Center
+            OnSelect: =Select(Parent)
+            Size: =20
+            Text: =ThisItem.EmployeAddress
+            Width: =208
+            X: =393
+            Y: =21
+            ZIndex: =1
+
+        Label19 As label:
+            Align: =Center
+            OnSelect: =Select(Parent)
+            Size: =20
+            Text: =ThisItem.EmployeID
+            Width: =99
+            X: =62
+            Y: =21
+            ZIndex: =2
+
+        Label20 As label:
+            Align: =Center
+            OnSelect: =Select(Parent)
+            Size: =20
+            Text: =ThisItem.EmployeName
+            Width: =198
+            X: =178
+            Y: =21
+            ZIndex: =3
+
+        Label21 As label:
+            Align: =Center
+            OnSelect: =Select(Parent)
+            Size: =20
+            Text: =ThisItem.EmployeNumber
+            Width: =182
+            X: =622
+            Y: =21
+            ZIndex: =4
+
+        ComboBox4 As combobox:
+            DisplayFields: =["Result","Skill"]
+            IsSearchable: =false
+            Items: |-
+                =//["Java","C","PowerApp"]
+                Distinct(SqlData,Skill)
+            OnSelect: =Select(Parent)
+            SearchFields: =["Result"]
+            SearchItems: =[]
+            Size: =20
+            Width: =168
+            X: =861
+            Y: =21
+            ZIndex: =5
+
+        Icon5 As icon.Edit:
+            Height: =40
+            Icon: =Icon.Edit
+            OnSelect: |-
+                =Select(Parent);
+                Set(var,true)
+            Visible: =var=false Or!ThisItem.IsSelected
+            Width: =42
+            X: =1054
+            Y: =19
+            ZIndex: =6
+
+        Icon6 As icon.Trash:
+            Height: =40
+            Icon: =Icon.Trash
+            OnSelect: |-
+                =Select(Parent);
+                "Remove(SqlData, ThisItem)";
+                Set(var,true);
+                Set(varD,true)
+            Visible: =var=false Or!ThisItem.IsSelected
+            Width: =42
+            X: =1186
+            Y: =23
+            ZIndex: =7
+
+        Icon7 As icon.Save:
+            Height: =40
+            Icon: =Icon.Save
+            OnSelect: |+
+                =Select(Parent);
+                "Patch(SqlData,ThisItem,{EmployeID:TextInput10.Text,EmployeName:TextInput11.Text,EmployeAddress:TextInput12.Text,EmployeNumber:TextInput13.Text})";
+                
+                Set(varU,true);
+                Set(var,true);
+                
+            Visible: =var=true && ThisItem.IsSelected
+            Width: =38
+            X: =1058
+            Y: =21
+            ZIndex: =8
+
+        Icon8 As icon.Cancel:
+            Height: =40
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =Select(Parent);
+                Set(var,false)
+            Visible: =var=true && ThisItem.IsSelected
+            Width: =36
+            X: =1192
+            Y: =21
+            ZIndex: =9
+
+        TextInput10 As text:
+            Default: =ThisItem.EmployeID
+            Height: =38
+            OnSelect: =Select(Parent)
+            Size: =20
+            Visible: =var=true && ThisItem.IsSelected
+            Width: =66
+            X: =80
+            Y: =21
+            ZIndex: =10
+
+        TextInput11 As text:
+            Default: =ThisItem.EmployeName
+            OnSelect: =Select(Parent)
+            Size: =20
+            Visible: =var=true && ThisItem.IsSelected
+            Width: =176
+            X: =178
+            Y: =21
+            ZIndex: =11
+
+        TextInput12 As text:
+            Default: =ThisItem.EmployeAddress
+            OnSelect: =Select(Parent)
+            Size: =20
+            Visible: =var=true && ThisItem.IsSelected
+            Width: =215
+            X: =386
+            Y: =21
+            ZIndex: =12
+
+        TextInput13 As text:
+            Default: =ThisItem.EmployeNumber
+            OnSelect: =Select(Parent)
+            Size: =20
+            Visible: =var=true && ThisItem.IsSelected
+            Width: =182
+            X: =622
+            Y: =21
+            ZIndex: =13
+
+        Label9 As label:
+            Height: =44
+            OnSelect: =Select(Parent)
+            Text: =ThisItem.Skill
+            Width: =155
+            X: =861
+            Y: =17
+            ZIndex: =14
+
+        Label24 As label:
+            Height: =56
+            OnSelect: |
+                =Select(Parent)
+            Text: =
+            Width: =52
+            X: =10
+            Y: =23
+            ZIndex: =15
+
+    Group2 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =15
+
+        Rectangle3 As rectangle:
+            Fill: =RGBA(63, 181, 181, 0.86)
+            Height: =768
+            Visible: =varU=true
+            Width: =1366
+            ZIndex: =10
+
+        Button7 As button:
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(232, 139, 139, 1)
+            FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+            Height: =402
+            PaddingBottom: =35
+            PaddingLeft: =35
+            PaddingRight: =35
+            PaddingTop: =35
+            Text: =""
+            Visible: =varU=true
+            Width: =937
+            X: =243
+            Y: =282
+            ZIndex: =11
+
+        Label7 As label:
+            Height: =84
+            Size: =30
+            Text: ="""If you want to Update"""
+            Visible: =varU=true
+            Width: =471
+            X: =487
+            Y: =326
+            ZIndex: =12
+
+        Button8 As button:
+            FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+            Height: =58
+            OnSelect: |-
+                =//update
+                Patch(SqlData,Gallery2.Selected,{EmployeID:TextInput10.Text,EmployeName:TextInput11.Text,EmployeAddress:TextInput12.Text,EmployeNumber:TextInput13.Text});
+                Navigate(Gallery2);
+                Set(varU,false);
+            PaddingBottom: =20
+            PaddingLeft: =20
+            PaddingRight: =20
+            PaddingTop: =20
+            Size: =20
+            Text: ="Yes"
+            Visible: =varU=true
+            Width: =178
+            X: =519
+            Y: =454
+            ZIndex: =13
+
+        Button9 As button:
+            FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+            Height: =58
+            OnSelect: |-
+                =Set(varU,false);
+                Navigate(Screen2)
+            PaddingBottom: =20
+            PaddingLeft: =20
+            PaddingRight: =20
+            PaddingTop: =20
+            Size: =20
+            Text: ="Cancel"
+            Visible: =varU=true
+            Width: =178
+            X: =764
+            Y: =454
+            ZIndex: =14
+
+    Dropdown1 As dropdown:
+        Default: ="All"
+        Height: =42
+        Items: |
+            =//Distinct(SqlData,EmployeAddress)
+            Collectvideo
+        Width: =222
+        X: =247
+        Y: =79
+        ZIndex: =21
+
+    Group3 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =22
+
+        Rectangle4 As rectangle:
+            Fill: =RGBA(215, 223, 240, 0.61)
+            Height: =768
+            Visible: =varD=true
+            Width: =1366
+            ZIndex: =16
+
+        Button10 As button:
+            Fill: =RGBA(102, 113, 166, 1)
+            FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+            Height: =412
+            Text: =""
+            Visible: =varD=true
+            Width: =858
+            X: =307
+            Y: =152
+            ZIndex: =17
+
+        Label8 As label:
+            Align: =Center
+            Fill: =RGBA(237, 237, 237, 1)
+            Height: =68
+            Size: =30
+            Text: ="If yoy want to Delete"
+            Visible: =varD=true
+            Width: =549
+            X: =469
+            Y: =253
+            ZIndex: =18
+
+        Button11 As button:
+            Color: =RGBA(0, 0, 0, 1)
+            Fill: =RGBA(230, 230, 230, 1)
+            FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+            Height: =50
+            OnSelect: |-
+                =Remove(SqlData,Gallery2.Selected);
+                Navigate(Gallery2);
+                Set(varD,false);
+            Size: =30
+            Text: ="Yes"
+            Visible: =varD=true
+            Width: =176
+            X: =549
+            Y: =404
+            ZIndex: =19
+
+        Button12 As button:
+            Color: =RGBA(0, 0, 0, 1)
+            Fill: =RGBA(230, 230, 230, 1)
+            FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+            Height: =50
+            OnSelect: |-
+                =Set(varD,false);
+                Navigate(Screen2)
+            Size: =30
+            Text: ="Cancel"
+            Visible: =varD=true
+            Width: =176
+            X: =782
+            Y: =404
+            ZIndex: =20
+
+    TextInput5 As text:
+        Default: =""
+        Height: =42
+        HintText: ="Search a Name"
+        Width: =164
+        X: =64
+        Y: =79
+        ZIndex: =23
+
+    Button13 As button:
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Text: ="Button"
+        X: =1206
+        Y: =728
+        ZIndex: =24
+
+    Label23 As label:
+        Fill: =RGBA(186, 202, 226, 1)
+        Height: =58
+        Size: =20
+        Text: ="No"
+        Width: =62
+        X: =57
+        Y: =152
+        ZIndex: =25
+
