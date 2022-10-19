@@ -1,0 +1,196 @@
+Screen1 As screen:
+    OnVisible: =
+
+    Label1_1 As label:
+        Height: =46
+        Size: =20
+        Text: |-
+            ="Employe ID:-"
+        Width: =250
+        X: =367
+        Y: =172
+        ZIndex: =1
+
+    Label2 As label:
+        Height: =46
+        Size: =20
+        Text: |-
+            ="Employe Name:-"
+        Width: =250
+        X: =367
+        Y: =253
+        ZIndex: =2
+
+    Label3 As label:
+        Height: =46
+        Size: =20
+        Text: |-
+            ="Employe Address:-"
+        Width: =250
+        X: =367
+        Y: =327
+        ZIndex: =3
+
+    Label4 As label:
+        Height: =46
+        Size: =20
+        Text: |-
+            ="Employe Number:-"
+        Width: =266
+        X: =367
+        Y: =405
+        ZIndex: =4
+
+    TextInput1 As text:
+        Default: =""
+        Size: =20
+        Width: =332
+        X: =757
+        Y: =178
+        ZIndex: =5
+
+    TextInput2 As text:
+        Default: =""
+        Size: =20
+        Width: =332
+        X: =757
+        Y: =256
+        ZIndex: =6
+
+    TextInput3 As text:
+        Default: =""
+        Size: =20
+        Width: =332
+        X: =757
+        Y: =333
+        ZIndex: =7
+
+    TextInput4 As text:
+        Default: =""
+        Size: =20
+        Width: =332
+        X: =757
+        Y: =411
+        ZIndex: =8
+
+    Button1 As button:
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Height: =62
+        OnSelect: |-
+            =//Patch(SqlTask,Defaults(SqlTask),{EmployeID:Label24),EmployeName:TextInput2.Text,EmployeAddress:TextInput3.Text,EmployeNumber:TextInput4.Text})
+            
+            "Patch(SqlData,Defaults(SqlData),{EmployeID:Value(TextInput1.Text),EmployeName:TextInput2.Text,EmployeAddress:TextInput3.Text,EmployeNumber:TextInput4.Text,Skill:ComboBox3.Selected.Value});
+            Reset(TextInput1);
+            Reset(TextInput2);
+            Reset(TextInput3);
+            Reset(TextInput4)";
+            Set(var,true)
+        Size: =20
+        Text: ="Save"
+        Width: =204
+        X: =726
+        Y: =601
+        ZIndex: =9
+
+    Label5 As label:
+        Height: =46
+        Size: =20
+        Text: ="Skill"
+        Width: =213
+        X: =367
+        Y: =470
+        ZIndex: =10
+
+    ComboBox3_1 As combobox:
+        DisplayFields: =["Value"]
+        IsSearchable: =false
+        Items: =["Java","C","PowerApp"]
+        SearchFields: =["Value"]
+        SearchItems: =[]
+        X: =761
+        Y: =483
+        ZIndex: =11
+
+    Button3_1 As button:
+        FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+        Height: =56
+        OnSelect: =Back()
+        Size: =20
+        Text: ="Back"
+        Width: =206
+        X: =439
+        Y: =607
+        ZIndex: =12
+
+    Group1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =18
+
+        Rectangle1 As rectangle:
+            BorderColor: =RGBA(19, 22, 38, 0.98)
+            Fill: =RGBA(56, 96, 178, 0.33)
+            Height: =768
+            Visible: =var=true
+            Width: =1366
+            ZIndex: =13
+
+        Button4 As button:
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(230, 230, 230, 1)
+            FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+            Height: =502
+            PaddingBottom: =30
+            PaddingLeft: =30
+            PaddingRight: =30
+            PaddingTop: =30
+            Text: =""
+            Visible: =var=true
+            Width: =945
+            X: =237
+            Y: =178
+            ZIndex: =14
+
+        Button5 As button:
+            FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+            Height: =55
+            OnSelect: |-
+                =Patch(SqlData,Defaults(SqlData),{EmployeID:Value(TextInput1.Text),EmployeName:TextInput2.Text,EmployeAddress:TextInput3.Text,EmployeNumber:TextInput4.Text,Skill:ComboBox3_1.Selected.Value});
+                Reset(TextInput1);
+                Reset(TextInput2);
+                Reset(TextInput3);
+                Reset(TextInput4);
+                Navigate(Screen2);
+                Set(var,false);
+            Text: ="Yes"
+            Visible: =var=true
+            Width: =197
+            X: =506
+            Y: =486
+            ZIndex: =15
+
+        Button6 As button:
+            FocusedBorderColor: =ColorFade(Self.Fill, -75%)
+            Height: =55
+            OnSelect: |-
+                =Set(var,false);
+                Navigate(Screen1)
+            Text: ="cancel"
+            Visible: =var=true
+            Width: =197
+            X: =742
+            Y: =483
+            ZIndex: =16
+
+        Label6_1 As label:
+            Height: =75
+            Size: =30
+            Text: ="If you want to save"
+            Visible: =var=true
+            Width: =406
+            X: =524
+            Y: =296
+            ZIndex: =17
+

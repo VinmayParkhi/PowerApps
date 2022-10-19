@@ -1,0 +1,34 @@
+{
+  "2f6bed44-bb0e-4bd1-add0-825198a7f3d5": {
+    "connectionParameters": {
+      "database": "fda_dev",
+      "server": "rntdbinstance.cywt4ngax3hu.us-east-2.rds.amazonaws.com"
+    },
+    "connectionRef": {
+      "apiTier": "Premium",
+      "authenticationType": "sqlAuthentication",
+      "displayName": "SQL Server",
+      "iconUri": "https://connectoricons-prod.azureedge.net/u/laborbol/patches/1595-sql/1.0.1595.2993/sql/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sql",
+      "parameterHints": {},
+      "parameterHintsV2": {},
+      "sharedConnectionId": "/providers/microsoft.powerapps/apis/shared_sql/connections/11010c1b38cf4319a3b35d908ae368ec",
+      "xrmConnectionReferenceLogicalName": "new_11010c1b38cf4319a3b35d908ae368ec"
+    },
+    "datasets": {
+      "rntdbinstance.cywt4ngax3hu.us-east-2.rds.amazonaws.com,fda_dev": {
+        "dataSources": {
+          "SqlData": {
+            "tableName": "[dbo].[SqlData]"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "SqlData"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "2f6bed44-bb0e-4bd1-add0-825198a7f3d5"
+  }
+}
